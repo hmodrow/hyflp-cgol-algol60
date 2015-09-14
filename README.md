@@ -1,12 +1,13 @@
 # hyflp-cgol-algol60
 Conway's game of life in ALGOL60
+
 begin 
 
-integer i,j;
 integer array tablero[0:2,0:2];
 
 procedure inicializarTablero (tablero);
 begin
+	integer i,j;
 	for i:=0 step 1 until 2 do
 		for j:=0 step 1 until 2 do
 			begin
@@ -21,6 +22,7 @@ end;
 
 procedure imprimirTablero (tablero);
 begin
+	integer i,j;
 	for i:=0 step 1 until 2 do
 	begin
 		for j:=0 step 1 until 2 do
@@ -34,10 +36,10 @@ end;
 
 procedure aplicarReglas (tablero);
 begin
-	integer vecinos,actual;
+	integer vecinos,actual,i,j;
 	integer array prevGen[0:2,0:2];
 	copiarTablero(prevGen,tablero);
-
+	
 	for i:=0 step 1 until 2 do
 	begin
 		for j:=0 step 1 until 2 do
@@ -65,6 +67,7 @@ end;
 procedure contarVecinosVivos (tablero, x,y, vecinos);
 begin
 	Boolean esVecino;
+	integer i,j;
 	vecinos := 0;
 	for i:=0 step 1 until 2 do
 	begin
