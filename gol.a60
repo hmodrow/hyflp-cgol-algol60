@@ -1,0 +1,101 @@
+#lang algol60
+
+begin 
+
+integer array tablero[0:2,0:2];
+
+procedure inicializarTablero (tablero, M,N);
+begin
+	integer i,j;
+	for i:=0 step 1 until (M-1) do
+		for j:=0 step 1 until (N-1) do
+			begin
+				if (i != j) then
+					 tablero[i,j]:= 0
+				else
+				 	tablero[i,j]:=1;
+				
+			end
+
+end;
+
+procedure imprimirTablero (tablero,M,N);
+begin
+	integer i,j;
+	for i:=0 step 1 until M-1 do
+	begin
+		for j:=0 step 1 until N-1 do
+		begin
+			printn(tablero[i,j]);
+		end;
+		printsln(`');
+	end
+end;		
+
+
+procedure aplicarReglas (tablero, M,N);
+begin
+	integer vecinos,actual,i,j;
+	integer array prevGen[0:2,0:2];
+	copiarTablero(prevGen,tablero,M,N);
+	
+	for i:=0 step 1 until M-1 do
+	begin
+		for j:=0 step 1 until N-1 do
+		begin
+			actual := prevGen[i,j];
+			contarVecinosVivos (prevGen,M,N,i,j,vecinos);
+			if (actual = 1) then
+			begin
+				if (vecinos < 2) then
+					 tablero[i,j]:=0 
+				else
+					if (vecinos <= 3) then
+						tablero[i,j]:=1
+					else 
+						tablero[i,j]:=0;				
+			end
+			else
+				if (vecinos = 3) then tablero[i,j]:=1;
+				
+		end;
+	end
+
+end;
+
+procedure contarVecinosVivos (tablero, M,N, x,y, vecinos);
+begin
+	Boolean esVecino;
+	integer i,j;
+	vecinos := 0;
+	for i:=(x-1) step 1 until (x+1) do
+	begin
+		for j:=(y-1) step 1 until (y+1) do
+		begin
+			esVecino := ((i>=0) & (j>=0) & (i<M) & (j<N) & ((x != i) | (y != j)));
+			if  esVecino then
+				begin
+					if (tablero[i,j] = 1) then vecinos := vecinos +1
+				end
+		
+		end;
+	end
+	
+
+end;
+
+procedure copiarTablero (prevGen,tablero,M,N);
+begin
+	integer i,j;
+	for i:=0 step 1 until (M-1) do
+		for j:=0 step 1 until (N-1) do
+			prevGen[i,j]:= tablero[i,j];
+
+end;
+
+inicializarTablero(tablero,3,3);
+imprimirTablero(tablero,3,3);
+aplicarReglas(tablero,3,3);
+imprimirTablero(tablero,3,3);
+
+end
